@@ -1,11 +1,7 @@
 import * as http from 'http';
 import { handleGET } from './controllers/GET/handleGET';
 import { handlePOST } from './controllers/POST/handlePOST';
-
-enum ROUTES {
-  users = '/api/users',
-  user = '/api/user',
-}
+import { handlePUT } from './controllers/PUT/handlePUT';
 
 enum RequestMethods {
   GET = 'GET',
@@ -23,6 +19,9 @@ const server = http.createServer((request: http.IncomingMessage, response: http.
       break;
     case RequestMethods.POST:
       handlePOST(request, response, request.url);
+      break;
+    case RequestMethods.PUT:
+      handlePUT(request, response, request.url);
       break;
     default:
       response.statusCode = 405;

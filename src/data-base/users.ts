@@ -34,7 +34,33 @@ class Users implements UsersStore<User> {
         resolve(user);
       }
 
-      reject(null);
+      reject(null); //! return message
+    });
+  }
+
+  public update(id: string, body: string): Promise<User | null> {
+    return new Promise((resolve, reject) => {
+      const { username, age, hobbies } = JSON.parse(body);
+
+      if (uuidValidate(id)) {
+        const userIdx: number = this.users.findIndex((user) => user.id === id);
+        let user = userIdx !== -1 ? this.users[userIdx] : null;
+
+        if (user) {
+          user = {
+            ...user,
+            username: username || user.username,
+            age: age || user.age,
+            hobbies: hobbies || user.hobbies,
+          };
+          this.users[userIdx] = { ...user };
+          resolve(user);
+        } else {
+          reject(404);
+        }
+      } else {
+        reject(400);
+      }
     });
   }
 }
