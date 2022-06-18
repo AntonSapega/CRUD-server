@@ -25,6 +25,13 @@ function updateUser(req: http.IncomingMessage, res: http.ServerResponse, id: str
       }
     }
   });
+
+  req.on('error', () => {
+    res.setHeader('Content-Type', 'text/html');
+    res.statusCode = 500;
+    res.write('Internal server error');
+    res.end();
+  });
 }
 
 export { updateUser };

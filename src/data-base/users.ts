@@ -4,23 +4,31 @@ import { User } from '../interfaces/User';
 import { UsersStore } from '../interfaces/UsersStore';
 
 class Users implements UsersStore<User> {
-  private users: User[];
+  private users: User[] | null = null;
 
   constructor() {
     this.users = [];
   }
 
-  public getUsers(): Array<User> {
-    return this.users;
+  public getUsers(): Promise<User[]> {
+    return new Promise((resolve, reject) => {
+      if (this.users) {
+        resolve(this.users);
+      } else {
+        reject(500);
+      }
+    });
   }
 
-  public getUser(id: string): User | null {
-    if (uuidValidate(id)) {
-      const targetUser: User | undefined = this.users.find((user: User) => user.id === id);
-      return targetUser ? targetUser : null;
-    }
-
-    throw Error('user id is an invalid');
+  public getUser(id: string): Promise<User> {
+    return new Promise((resolve, reject) => {
+      if (uuidValidate(id)) {
+        const targetUser: User | undefined = this.users.find((user: User) => user.id === id);
+        targetUser ? resolve(targetUser) : reject(404);
+      } else {
+        reject(400);
+      }
+    });
   }
 
   public createUser(newUser: string): Promise<User | null> {
@@ -34,7 +42,7 @@ class Users implements UsersStore<User> {
         resolve(user);
       }
 
-      reject(null); //! return message
+      reject(400);
     });
   }
 

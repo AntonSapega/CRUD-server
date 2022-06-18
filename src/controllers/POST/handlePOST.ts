@@ -8,7 +8,7 @@ function handlePOST(req: http.IncomingMessage, res: http.ServerResponse, url: st
   } else {
     res.setHeader('Content-Type', 'text/html');
     res.statusCode = 404;
-    res.end('Not found');
+    res.end('Page not found');
   }
 }
 

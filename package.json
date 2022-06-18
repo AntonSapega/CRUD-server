@@ -5,9 +5,9 @@
   "main": "server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack && cd dist && node bundle.js",
+    "start:prod": "webpack && cd dist && node bundle.js",
     "watch": "webpack --watch",
-    "dev": "nodemon ./src/server.ts",
+    "start:dev": "nodemon ./src/server.ts",
     "watch:server": "nodemon \"./dist/bundle.js\" --watch \"./dist\""
   },
   "repository": {

@@ -16,7 +16,7 @@ const server = http.createServer((request: http.IncomingMessage, response: http.
 
   switch (request.method) {
     case RequestMethods.GET:
-      handleGET(request, response, request.url);
+      handleGET(response, request.url);
       break;
     case RequestMethods.POST:
       handlePOST(request, response, request.url);
@@ -28,6 +28,7 @@ const server = http.createServer((request: http.IncomingMessage, response: http.
       handleDELETE(request, response, request.url);
       break;
     default:
+      response.setHeader('Content-Type', 'text/html');
       response.statusCode = 405;
       response.write('Method Not Allowed');
       response.end();

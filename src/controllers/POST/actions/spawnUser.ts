@@ -5,7 +5,6 @@ function spawnUser(req: http.IncomingMessage, res: http.ServerResponse) {
   let content = '';
 
   //! Move it to somewhere BUT I AM NOT SURE
-  //! Did not catch error event
   req.on('data', (chunk) => {
     content += chunk.toString();
   });
@@ -18,9 +17,16 @@ function spawnUser(req: http.IncomingMessage, res: http.ServerResponse) {
       res.end(JSON.stringify(newUser));
     } catch (error) {
       res.setHeader('Content-Type', 'text/html');
-      res.statusCode = 400;
+      res.statusCode = error;
       res.end('Created user have to contain only follow fields: username, age, hobbies');
     }
+  });
+
+  req.on('error', () => {
+    res.setHeader('Content-Type', 'text/html');
+    res.statusCode = 500;
+    res.write('Internal server error');
+    res.end();
   });
 }
 
