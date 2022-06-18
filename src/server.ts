@@ -1,8 +1,10 @@
 import * as http from 'http';
-import * as users from './users.json';
+import { handleGET } from './controllers/GET/handleGET';
+import { handlePOST } from './controllers/POST/handlePOST';
 
 enum ROUTES {
   users = '/api/users',
+  user = '/api/user',
 }
 
 enum RequestMethods {
@@ -13,15 +15,19 @@ enum RequestMethods {
 }
 
 const server = http.createServer((request: http.IncomingMessage, response: http.ServerResponse) => {
-  // console.log('RESPONSE WAS SENDED', request.method);
-  response.setHeader('Content-Type', 'application/json');
+  response.setHeader('Allow', 'GET, POST, PUT, DELETE');
 
-  if (request.url === ROUTES.users && request.method === RequestMethods.GET) {
-    response.statusCode = 200;
-    response.end(JSON.stringify(users));
-  } else {
-    response.statusCode = 404;
-    response.end(JSON.stringify({ message: 'Page was not found' }));
+  switch (request.method) {
+    case RequestMethods.GET:
+      handleGET(request, response, request.url);
+      break;
+    case RequestMethods.POST:
+      handlePOST(request, response, request.url);
+      break;
+    default:
+      response.statusCode = 405;
+      response.write('Method Not Allowed');
+      response.end();
   }
 });
 
