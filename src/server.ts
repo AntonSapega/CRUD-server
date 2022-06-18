@@ -1,4 +1,5 @@
 import * as http from 'http';
+import 'dotenv/config';
 import { handleGET } from './controllers/GET/handleGET';
 import { handlePOST } from './controllers/POST/handlePOST';
 import { handlePUT } from './controllers/PUT/handlePUT';
@@ -35,8 +36,8 @@ const server = http.createServer((request: http.IncomingMessage, response: http.
   }
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
 server.listen(PORT, () => {
-  console.log(`Listen on port ${PORT}`);
+  console.log(`Server works on port ${PORT}`);
 });
