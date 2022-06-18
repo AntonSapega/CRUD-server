@@ -1,13 +1,13 @@
 import * as http from 'http';
 import { parseUrl } from '../../utils/parseUrl';
-import { updateUser } from './actions/updateUser';
 import { routes } from '../../routes/routes';
+import { deleteUser } from './actions/deleteUser';
 
-function handlePUT(req: http.IncomingMessage, res: http.ServerResponse, url: string) {
+function handleDELETE(req: http.IncomingMessage, res: http.ServerResponse, url: string) {
   const { path, id } = parseUrl(url);
 
-  if (path === routes.users && id) {
-    updateUser(req, res, id);
+  if (path === routes.users) {
+    deleteUser(req, res, id);
   } else {
     res.setHeader('Content-Type', 'text/html');
     res.statusCode = 404;
@@ -15,4 +15,4 @@ function handlePUT(req: http.IncomingMessage, res: http.ServerResponse, url: str
   }
 }
 
-export { handlePUT };
+export { handleDELETE };

@@ -63,6 +63,22 @@ class Users implements UsersStore<User> {
       }
     });
   }
+
+  delete(id: string): Promise<number> {
+    return new Promise((resolve, reject) => {
+      if (uuidValidate(id)) {
+        const userForDeleteIdx: number = this.users.findIndex((user) => user.id === id);
+        if (userForDeleteIdx !== -1) {
+          this.users.splice(userForDeleteIdx, 1);
+          resolve(204);
+        } else {
+          reject(404);
+        }
+      } else {
+        reject(400);
+      }
+    });
+  }
 }
 
 let usersDB: Users = new Users();
