@@ -12,9 +12,10 @@ function handleGET(res: http.ServerResponse, url: string): void {
   } else if (path === '/api/users' && id) {
     fetchUser(res, id);
   } else {
-    res.setHeader('Content-Type', 'text/html');
+    res.setHeader('Content-Type', 'application/json');
     res.statusCode = 404;
-    res.end('Page not found');
+    const message = { message: 'Page not found' };
+    res.end(JSON.stringify(message));
   }
 }
 

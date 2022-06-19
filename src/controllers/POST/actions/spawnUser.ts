@@ -16,16 +16,18 @@ function spawnUser(req: http.IncomingMessage, res: http.ServerResponse) {
       res.statusCode = 201;
       res.end(JSON.stringify(newUser));
     } catch (error) {
-      res.setHeader('Content-Type', 'text/html');
+      res.setHeader('Content-Type', 'application/json');
       res.statusCode = error;
-      res.end('Created user have to contain only follow fields: username, age, hobbies');
+      const message = { message: 'Created user have to contain only follow fields: username, age, hobbies' };
+      res.end(JSON.stringify(message));
     }
   });
 
   req.on('error', () => {
-    res.setHeader('Content-Type', 'text/html');
+    res.setHeader('Content-Type', 'application/json');
     res.statusCode = 500;
-    res.write('Internal server error');
+    const message = { message: 'Internal server error' };
+    res.write(JSON.stringify(message));
     res.end();
   });
 }

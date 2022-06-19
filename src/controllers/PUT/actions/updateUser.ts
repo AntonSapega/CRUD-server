@@ -15,20 +15,23 @@ function updateUser(req: http.IncomingMessage, res: http.ServerResponse, id: str
       res.statusCode = 200;
       res.end(JSON.stringify(user));
     } catch (error) {
-      res.setHeader('Content-Type', 'text/html');
+      res.setHeader('Content-Type', 'application/json');
       if (error === 400) {
         res.statusCode = 400;
-        res.end('Wrong user id');
+        const message = { message: 'Wrong user id' };
+        res.end(JSON.stringify(message));
       } else if (error === 404) {
         res.statusCode = 404;
-        res.end('User does not exits');
+        const message = { message: 'User does not exit' };
+        res.end(JSON.stringify(message));
       }
     }
   });
 
   req.on('error', () => {
-    res.setHeader('Content-Type', 'text/html');
+    res.setHeader('Content-Type', 'application/json');
     res.statusCode = 500;
+    const message = { message: 'Internal server error' };
     res.write('Internal server error');
     res.end();
   });

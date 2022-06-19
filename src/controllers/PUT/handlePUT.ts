@@ -9,9 +9,10 @@ function handlePUT(req: http.IncomingMessage, res: http.ServerResponse, url: str
   if (path === routes.users && id) {
     updateUser(req, res, id);
   } else {
-    res.setHeader('Content-Type', 'text/html');
+    res.setHeader('Content-Type', 'application/json');
     res.statusCode = 404;
-    res.end('Page not found');
+    const message = { message: 'Page not found' };
+    res.end(JSON.stringify(message));
   }
 }
 

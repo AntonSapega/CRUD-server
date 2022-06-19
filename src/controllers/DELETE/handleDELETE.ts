@@ -9,9 +9,10 @@ function handleDELETE(req: http.IncomingMessage, res: http.ServerResponse, url: 
   if (path === routes.users) {
     deleteUser(req, res, id);
   } else {
-    res.setHeader('Content-Type', 'text/html');
+    res.setHeader('Content-Type', 'application/json');
     res.statusCode = 404;
-    res.end('Page not found');
+    const message = { message: 'Page not found' };
+    res.end(JSON.stringify(message));
   }
 }
 
