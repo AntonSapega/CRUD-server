@@ -3,6 +3,7 @@ import { fetchUsersList } from './actions/fetchUsersList';
 import { fetchUser } from './actions/fetchUser';
 import { parseUrl } from '../../utils/parseUrl';
 import { routes } from '../../routes/routes';
+import { makeResponse } from '../../utils/makeResponse';
 
 function handleGET(res: http.ServerResponse, url: string): void {
   const { path, id } = parseUrl(url);
@@ -12,10 +13,7 @@ function handleGET(res: http.ServerResponse, url: string): void {
   } else if (path === '/api/users' && id) {
     fetchUser(res, id);
   } else {
-    res.setHeader('Content-Type', 'application/json');
-    res.statusCode = 404;
-    const message = { message: 'Page not found' };
-    res.end(JSON.stringify(message));
+    makeResponse(res, 404);
   }
 }
 

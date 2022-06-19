@@ -2,6 +2,7 @@ import * as http from 'http';
 import { parseUrl } from '../../utils/parseUrl';
 import { updateUser } from './actions/updateUser';
 import { routes } from '../../routes/routes';
+import { makeResponse } from '../../utils/makeResponse';
 
 function handlePUT(req: http.IncomingMessage, res: http.ServerResponse, url: string) {
   const { path, id } = parseUrl(url);
@@ -9,10 +10,7 @@ function handlePUT(req: http.IncomingMessage, res: http.ServerResponse, url: str
   if (path === routes.users && id) {
     updateUser(req, res, id);
   } else {
-    res.setHeader('Content-Type', 'application/json');
-    res.statusCode = 404;
-    const message = { message: 'Page not found' };
-    res.end(JSON.stringify(message));
+    makeResponse(res, 404);
   }
 }
 

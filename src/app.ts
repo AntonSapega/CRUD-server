@@ -5,6 +5,7 @@ import { handleGET } from './controllers/GET/handleGET';
 import { handlePOST } from './controllers/POST/handlePOST';
 import { handlePUT } from './controllers/PUT/handlePUT';
 import { handleDELETE } from './controllers/DELETE/handleDELETE';
+import { makeResponse } from './utils/makeResponse';
 
 const server = http.createServer((request: http.IncomingMessage, response: http.ServerResponse) => {
   response.setHeader('Allow', 'GET, POST, PUT, DELETE');
@@ -23,11 +24,7 @@ const server = http.createServer((request: http.IncomingMessage, response: http.
       handleDELETE(request, response, request.url);
       break;
     default:
-      response.setHeader('Content-Type', 'application/json');
-      response.statusCode = 405;
-      const message = { message: 'Method does not allow' };
-      response.write(JSON.stringify(message));
-      response.end();
+      makeResponse(response, 405);
   }
 });
 
