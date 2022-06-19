@@ -1,9 +1,12 @@
 import * as http from 'http';
 import 'dotenv/config';
+// import * as dotenv from 'dotenv';
 import { handleGET } from './controllers/GET/handleGET';
 import { handlePOST } from './controllers/POST/handlePOST';
 import { handlePUT } from './controllers/PUT/handlePUT';
 import { handleDELETE } from './controllers/DELETE/handleDELETE';
+
+// dotenv.config();
 
 enum RequestMethods {
   GET = 'GET',
