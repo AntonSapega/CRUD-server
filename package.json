@@ -6,9 +6,8 @@
   "scripts": {
     "test": "npx jest",
     "start:prod": "webpack && cd dist && node bundle.js",
-    "watch": "webpack --watch",
     "start:dev": "nodemon ./src/server.ts",
-    "watch:server": "nodemon \"./dist/bundle.js\" --watch \"./dist\""
+    "start:multi": "nodemon ./src/cluster-server.ts"
   },
   "repository": {
     "type": "git",

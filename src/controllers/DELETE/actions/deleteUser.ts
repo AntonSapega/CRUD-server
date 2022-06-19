@@ -12,12 +12,14 @@ async function deleteUser(req: http.IncomingMessage, res: http.ServerResponse, i
       case 400:
         res.setHeader('Content-Type', 'application/json');
         res.statusCode = 400;
-        res.end('Wrong user id');
+        const message = { message: 'Wrong user id' };
+        res.end(JSON.stringify(message));
         break;
       case 404:
         res.setHeader('Content-Type', 'application/json');
         res.statusCode = 404;
-        res.end(`User with id: ${id} doesn't exist`);
+        const messageID = { message: `User with id: ${id} doesn't exist` };
+        res.end(JSON.stringify(messageID));
     }
   }
 }
